@@ -1,6 +1,6 @@
-{ lib, stdenv }:
+{ lib, stdenvNoCC }:
 
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation rec {
   pname = "microsoft-aptos-fonts";
   version = "4.40";
 
@@ -9,7 +9,9 @@ stdenv.mkDerivation rec {
   dontBuild = true;
 
   installPhase = ''
+    runHook preInstall
     install -D $src/*.ttf -t $out/share/fonts/truetype/
+    runHook postInstall
   '';
 
   meta = with lib; {
